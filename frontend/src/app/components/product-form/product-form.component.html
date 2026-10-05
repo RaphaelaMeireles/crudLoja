@@ -1,0 +1,82 @@
+<div class="page-header">
+  <h1>{{ id ? "Editar produto" : "Novo produto" }}</h1>
+</div>
+
+<form class="card" (ngSubmit)="save()">
+  <div class="form-field">
+    <label for="nome">Nome</label>
+    <input
+      type="text"
+      id="nome"
+      [(ngModel)]="product.nome"
+      name="nome"
+      required
+    />
+  </div>
+
+  <div class="form-field">
+    <label for="marca">Marca</label>
+    <input
+      type="text"
+      id="marca"
+      [(ngModel)]="product.marca"
+      name="marca"
+      required
+    />
+  </div>
+
+  <div class="form-field">
+    <label for="valor">Valor</label>
+    <input type="number" id="valor" [(ngModel)]="product.valor" name="valor" />
+  </div>
+
+  <div class="form-field form-field-check">
+    <input
+      type="checkbox"
+      id="status"
+      [(ngModel)]="product.status"
+      name="status"
+    />
+    <label for="status">Produto em Estoque</label>
+  </div>
+
+  <div class="form-field">
+    <label>Imagem</label>
+
+    <input
+      #fileInput
+      type="file"
+      accept="image/png, image/jpeg, image/webp"
+      (change)="onFileSelected($event)"
+      hidden
+    />
+
+    <div class="upload-row">
+      <button
+        type="button"
+        class="btn btn-secondary"
+        (click)="fileInput.click()"
+      >
+        {{ preview ? "Trocar imagem" : "Escolher imagem" }}
+      </button>
+      <span class="upload-name">{{
+        imagemFile?.name || "Nenhum arquivo selecionado"
+      }}</span>
+    </div>
+
+    <small class="upload-error" *ngIf="erroImagem">{{ erroImagem }}</small>
+    <img
+      *ngIf="preview"
+      [src]="preview"
+      alt="Previa da imagem"
+      class="image-preview"
+    />
+  </div>
+
+  <small class="upload-error" *ngIf="erroSalvar">{{ erroSalvar }}</small>
+
+  <div class="form-actions">
+    <button type="submit" class="btn btn-primary">Salvar</button>
+    <a routerLink="/" class="btn btn-secondary">Cancelar</a>
+  </div>
+</form>
